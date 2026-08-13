@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "795790590972",
+    "project_id": "upwork-30e45",
+    "storage_bucket": "upwork-30e45.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795790590972:android:586ec01042d7f353916879",
+        "android_client_info": {
+          "package_name": "com.example.upwork"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_yMfXejFG-34_00luP7g2lqx9lkV4E0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
