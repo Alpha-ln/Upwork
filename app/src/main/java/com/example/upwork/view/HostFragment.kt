@@ -34,8 +34,6 @@ class HostFragment : Fragment() {
         // Initialize UI components
         val recyclerView = view.findViewById<RecyclerView>(R.id.instructorRecyclerView)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
-        val sessionIdEditText = view.findViewById<EditText>(R.id.sessionIdEditText)
-        val goBtn = view.findViewById<Button>(R.id.goBtn)
         val welcomeText = view.findViewById<TextView>(R.id.welcomeText)
 
         // Fetch User Name for Greeting
@@ -52,54 +50,9 @@ class HostFragment : Fragment() {
 
         // Set up RecyclerView (Horizontal as typical for instructor lists)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        
-        // Fetch data from Firestore
-        progressBar.visibility = View.VISIBLE
-        lifecycleScope.launch {
-            val instructorList = repository.getInstructors()
-            progressBar.visibility = View.GONE
-            
-            if (instructorList.isNotEmpty()) {
-                recyclerView.adapter = InstructorAdapter(instructorList) { instructor ->
-                    val bundle = Bundle().apply {
-                        putString("instructorId", instructor.instructorId)
-                    }
-                    findNavController().navigate(R.id.action_homeItem_to_instructorPlaylist, bundle)
-                }
-            } else {
-                Toast.makeText(context, "No instructors found", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-        goBtn.setOnClickListener {
-            val sessionId = sessionIdEditText.text.toString().trim()
-            if (sessionId.isNotEmpty()) {
-                navigateToDetails(sessionId)
-            } else {
-                Toast.makeText(context, "Please enter a Session ID", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         return view
-    }
-
-    private fun navigateToDetails(videoId: String) {
-        val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
-        progressBar?.visibility = View.VISIBLE
-
-        lifecycleScope.launch {
-            val video = repository.getVideoById(videoId)
-            progressBar?.visibility = View.GONE
-
-            if (video != null) {
-                val bundle = Bundle().apply {
-                    putString("videoId", videoId)
-                }
-                findNavController().navigate(R.id.videoDetailsFragment, bundle)
-            } else {
-                Toast.makeText(context, "Invalid Video ID or Session not found", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
 }

@@ -16,6 +16,7 @@
     <string name="welcome_to_upwork">Welcome to Upwork</string>
     <string name="generate_new_code">Generate new code</string>
     <string name="num_of_code">How many code</string>
+    <string name="student_level">Your level</string>
 
     <!-- Firebase/Google configuration -->
     <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_FROM_FIREBASE</string>

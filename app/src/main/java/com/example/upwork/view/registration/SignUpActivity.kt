@@ -1,17 +1,15 @@
 package com.example.upwork.view.registration
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.upwork.databinding.SignUpLayoutBinding
-import com.example.upwork.model.Instructor
-import com.example.upwork.model.Student
-import com.example.upwork.model.User
-import com.example.upwork.view.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity: AppCompatActivity() {
     private lateinit var binding: SignUpLayoutBinding
@@ -25,15 +23,20 @@ class SignUpActivity: AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        // Setup student level dropdown
+        val levels = arrayOf("First level", "Second level", "Third level")
+        val adapter = ArrayAdapter(this, R.layout.simple_list_item_1, levels)
+        (binding.studentLevel.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
         // Get text when button is clicked
         binding.signUpBtn.setOnClickListener {
             val email = binding.emailInput.editText?.text.toString().trim()
             val password = binding.passwordInput.editText?.text.toString().trim()
             val confirmPassword = binding.confirmPassInput.editText?.text.toString().trim()
             val name = binding.nameInput.editText?.text.toString().trim()
-            val role = if (binding.instructorRadio.isChecked) "instructor" else "student"
+            val studentLevel = binding.studentLevel.editText?.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || name.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || name.isEmpty() || studentLevel.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -49,55 +52,10 @@ class SignUpActivity: AppCompatActivity() {
             binding.signUpBtn.isEnabled = false
 
             auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener { result ->
-                    val uid = result.user?.uid ?: return@addOnSuccessListener
-                    val user = User(
-                        uid = uid,
-                        name = name,
-                        email = email,
-                        role = role
-                    )
-                    FirebaseFirestore.getInstance()
-                        .collection("Users")
-                        .document(uid)
-                        .set(user)
-                        .addOnSuccessListener {
-                            // ALSO save to Students collection if the role is student
-                            if (role == "student") {
-                                val studentData = Student(
-                                    studentId = uid,
-                                    studentName = name,
-                                    major = "General"
-                                )
-                                FirebaseFirestore.getInstance()
-                                    .collection("Students")
-                                    .document(uid)
-                                    .set(studentData)
-                                Toast.makeText(this, "Account created successfully.", Toast.LENGTH_LONG).show()
-                                startActivity(Intent(this, HomeActivity::class.java))
-                                finish()
-                            } else if (role == "instructor") {
-                                // Create a pending instructor profile
-                                val instructorData = Instructor(
-                                    instructorId = uid,
-                                    name = name,
-                                    speciality = "Pending Approval",
-                                    imageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // Placeholder
-                                    verified = false
-                                )
-                                FirebaseFirestore.getInstance()
-                                    .collection("Instructors")
-                                    .document(uid)
-                                    .set(instructorData)
-                                Toast.makeText(this, "Account created! Waiting for admin approval.", Toast.LENGTH_LONG).show()
-                                finish()
-                            }
-
-                        }
-                        .addOnFailureListener { e ->
-                            binding.signUpBtn.isEnabled = true
-                            Toast.makeText(this, "Database error: ${e.message}", Toast.LENGTH_LONG).show()
-                        }
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Sign up successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
                 }
 
                 .addOnFailureListener { e ->

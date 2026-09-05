@@ -110,32 +110,28 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RadioGroup
-        android:id="@+id/roleRadioGroup"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/studentLevel"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:hint="@string/student_level"
+        android:padding="6dp"
+        app:boxStrokeColor="@color/brand_blue"
+        app:hintTextColor="@color/brand_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassInput">
+        app:layout_constraintTop_toBottomOf="@id/confirmPassInput">
 
-        <RadioButton
-            android:id="@+id/studentRadio"
-            android:layout_width="wrap_content"
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:checked="true"
-            android:text="Student"
-            android:textColor="@color/black" />
+            android:inputType="none"
+            android:textColor="@color/black"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioButton
-            android:id="@+id/instructorRadio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Instructor"
-            android:textColor="@color/black" />
-    </RadioGroup>
 
     <Button
         android:id="@+id/signUpBtn"
@@ -149,7 +145,7 @@
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roleRadioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/studentLevel" />
 
     <TextView
         android:id="@+id/textView"

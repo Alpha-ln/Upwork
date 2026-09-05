@@ -56,13 +56,15 @@ class HomeActivity : AppCompatActivity() {
         val userNameTextView: android.widget.TextView = headerView.findViewById(R.id.userName)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
+
+
         if (currentUser != null) {
             userEmailTextView.text = currentUser.email
-            userNameTextView.text = currentUser.displayName ?: "User"
-            checkUserRole(currentUser.uid, navView)
+            userNameTextView.text = currentUser.displayName ?: "Student"
+
         } else {
-            userEmailTextView.text = "guest@Upwork.com"
-            userNameTextView.text = "Guest User"
+            userEmailTextView.text = "student@Upwork.com"
+            userNameTextView.text = "student user"
         }
         // Professional Handle Sign Out
         navView.setNavigationItemSelectedListener { item ->
@@ -83,41 +85,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkUserRole(uid: String, navView: NavigationView) {
-        FirebaseFirestore.getInstance().collection("Users").document(uid).get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    val role = document.getString("role")
-                    val name = document.getString("name")
-
-                    // Update Header Name from Firestore
-                    val headerView = navView.getHeaderView(0)
-                    val userNameTextView: android.widget.TextView = headerView.findViewById(R.id.userName)
-                    if (!name.isNullOrEmpty()) {
-                        userNameTextView.text = name
-                    }
-                    
-                    // Default: Hide special menus
-                    navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = false
-                    navView.menu.findItem(R.id.adminPanelItem)?.isVisible = false
-
-                    when (role) {
-                        "instructor" -> {
-                            // Only show if verified
-                            FirebaseFirestore.getInstance().collection("Instructors").document(uid).get()
-                                .addOnSuccessListener { instructorDoc ->
-                                    val isVerified = instructorDoc.getBoolean("verified") ?: false
-                                    navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = isVerified
-                                }
-                        }
-                        "admin" -> {
-                            navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = true
-                            navView.menu.findItem(R.id.adminPanelItem)?.isVisible = true
-                        }
-                    }
-                }
-            }
-    }
 
     private fun signOut() {
         FirebaseAuth.getInstance().signOut()

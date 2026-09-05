@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="280dp"
+    android:layout_width="match_parent"
     android:layout_height="380dp"
     android:layout_margin="16dp"
     android:clickable="true"
@@ -28,43 +28,29 @@
             tools:src="@tools:sample/avatars" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="@drawable/gradient_bottom_overlay"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/instructorName"
+            android:id="@+id/videoTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Instructor Name"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/instructorSpecialty"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Dr. Sarah Johnson" />
-
-        <TextView
-            android:id="@+id/instructorSpecialty"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="24dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Specialty"
-            android:textColor="#E0E0E0"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Data Science Expert" />
+            app:layout_constraintTop_toTopOf="@+id/view"
+            tools:text="Learning how to build an application by yourself using kotlin" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
