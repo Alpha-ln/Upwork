@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/profileItem"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_person"
+        />
+    <item
+        android:id="@+id/historyItem"
+        android:title="@string/history"
+        android:icon="@drawable/ic_history"
+        />
+    <item
+        android:id="@+id/codeGeneratingItem"
+        android:title="Code Generation"
+        android:icon="@drawable/ic_settings"
+        />
+    <item
+        android:id="@+id/adminPanelItem"
+        android:title="Admin Panel"
+        android:icon="@drawable/ic_settings"
+        />
+    <item
+        android:id="@+id/signOutItem"
+        android:title="@string/sign_out"
+        android:icon="@drawable/ic_logout"
+        />
+</menu>

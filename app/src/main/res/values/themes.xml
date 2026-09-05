@@ -3,7 +3,29 @@
     <style name="Base.Theme.Upwork" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorSecondary">@color/brand_red</item>
     </style>
 
     <style name="Theme.Upwork" parent="Base.Theme.Upwork" />
+
+    <style name="headerStyle">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="btnStyle">
+        <item name="android:textSize">19sp</item>
+
+    </style>
+
+    <style name="CircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="roundImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30%</item>
+    </style>
+
 </resources>
