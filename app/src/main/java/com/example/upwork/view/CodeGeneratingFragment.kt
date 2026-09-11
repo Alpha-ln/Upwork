@@ -3,22 +3,25 @@ package com.example.upwork.view
 import android.content.Context
 import android.os.Bundle
 import android.print.PrintAttributes
-import android.print.PrintDocumentAdapter
 import android.print.PrintManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.upwork.R
-import com.example.upwork.model.Code
+import com.example.upwork.model.ActivationCode
+import com.example.upwork.model.Video
 import com.example.upwork.network.FirestoreRepository
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -28,35 +31,46 @@ class CodeGeneratingFragment : Fragment() {
     private lateinit var codeAdapter: CodeAdapter
     private val repository = FirestoreRepository()
     private var generatedCodesList = mutableListOf<String>()
-
+    private var videos = listOf<Video>()
+    private var selectedVideoId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_code_generating, container, false)
 
         val displayCodeRV = view.findViewById<RecyclerView>(R.id.displayCodeRecyclerView)
         val numOfCodeEditText = view.findViewById<EditText>(R.id.numOfCodeEditText)
         val genBtn = view.findViewById<Button>(R.id.generateBtn)
         val printBtn = view.findViewById<Button>(R.id.printBtn)
+        val videoSpinner = view.findViewById<Spinner>(R.id.videoSpinner) // add this to your XML
 
         codeAdapter = CodeAdapter(generatedCodesList)
         displayCodeRV.adapter = codeAdapter
         displayCodeRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        loadVideosIntoSpinner(videoSpinner)
+
         genBtn.setOnClickListener {
             val countStr = numOfCodeEditText.text.toString().trim()
-            if (countStr.isNotEmpty()) {
-                val count = countStr.toIntOrNull() ?: 0
-                if (count > 0) {
-                    generateCodes(count)
-                } else {
-                    Toast.makeText(context, "Enter a valid number", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(context, "Enter number of codes", Toast.LENGTH_SHORT).show()
+            val videoId = selectedVideoId
+
+            if (videoId.isNullOrEmpty()) {
+                Toast.makeText(context, "Select a video first", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+            if (countStr.isEmpty()) {
+                Toast.makeText(context, "Enter number of codes", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val count = countStr.toIntOrNull() ?: 0
+            if (count <= 0) {
+                Toast.makeText(context, "Enter a valid number", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            generateCodes(count, videoId)
         }
 
         printBtn.setOnClickListener {
@@ -67,35 +81,55 @@ class CodeGeneratingFragment : Fragment() {
             }
         }
 
-
         return view
     }
 
-    private fun generateCodes(count: Int) {
+    private fun loadVideosIntoSpinner(spinner: Spinner) {
+        lifecycleScope.launch {
+            videos = repository.getAllVideos()
+            val titles = videos.map { it.title }
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, titles)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedVideoId = videos.getOrNull(position)?.videoId
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    selectedVideoId = null
+                }
+            }
+        }
+    }
+
+    private fun generateCodes(count: Int, videoId: String) {
         generatedCodesList.clear()
-        val codesToSave = mutableListOf<Code>()
-        
-        for (i in 1..count) {
+        val codeMap = mutableMapOf<String, ActivationCode>()
+
+        repeat(count) {
             val codeStr = UUID.randomUUID().toString().substring(0, 6).uppercase()
             generatedCodesList.add(codeStr)
-            codesToSave.add(Code(code = codeStr, status = false))
+            codeMap[codeStr] = ActivationCode(
+                status = "active",
+                usedAt = null,
+                usedByStudentId = null,
+                videoId = videoId
+            )
         }
         codeAdapter.updateCodes(generatedCodesList)
 
-        // Save to Firestore
         lifecycleScope.launch {
-            val success = repository.saveCodes(codesToSave)
-            if (success) {
-                Toast.makeText(context, "Codes saved to database", Toast.LENGTH_SHORT).show()
-            }
+            val success = repository.saveCodes(codeMap)
+            val msg = if (success) "Codes saved to database" else "Failed to save codes"
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun doPrint() {
         val printManager = requireContext().getSystemService(Context.PRINT_SERVICE) as PrintManager
         val jobName = "${getString(R.string.app_name)} Document"
-        
-        // Use a simple HTML-based print approach
+
         val webView = WebView(requireContext())
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {

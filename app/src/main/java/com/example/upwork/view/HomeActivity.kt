@@ -2,6 +2,7 @@ package com.example.upwork.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.upwork.R
 import com.example.upwork.view.registration.LoginActivity
@@ -36,37 +38,59 @@ class HomeActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_home_view)
         val bottomNavView: BottomNavigationView = findViewById(R.id.bottomNavigation)
 
-
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.homeItem, R.id.historyItem, R.id.profileItem),
             drawerLayout
         )
 
-        // Setup Navigation components
         navView.setupWithNavController(navController)
         bottomNavView.setupWithNavController(navController)
 
         // HIDE special menus by default before checking role
         navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = false
         navView.menu.findItem(R.id.adminPanelItem)?.isVisible = false
+        navView.menu.findItem(R.id.profileItem)?.isVisible = false
+        bottomNavView.menu.findItem(R.id.profileItem)?.isVisible = false
 
-        // Update Nav Header with user info
         val headerView = navView.getHeaderView(0)
-        val userEmailTextView: android.widget.TextView = headerView.findViewById(R.id.userEmail)
-        val userNameTextView: android.widget.TextView = headerView.findViewById(R.id.userName)
+        val userEmailTextView: TextView = headerView.findViewById(R.id.userEmail)
+        val userNameTextView: TextView = headerView.findViewById(R.id.userName)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-
         if (currentUser != null) {
             userEmailTextView.text = currentUser.email
-            userNameTextView.text = currentUser.displayName ?: "Student"
 
+            // Pull name + role from Firestore, not FirebaseAuth
+            // (displayName is only ever set for Google sign-in, so email/password users show blank otherwise)
+            FirebaseFirestore.getInstance().collection("users")
+                .document(currentUser.uid)
+                .get()
+                .addOnSuccessListener { doc ->
+                    val name = doc.getString("name")
+                    val role = doc.getString("role") ?: "student"
+
+                    userNameTextView.text = if (!name.isNullOrEmpty()) name else "Student"
+
+                    // Reveal role-gated menu items only after confirming role
+                    val isInstructorOrAdmin = role == "instructor" || role == "admin"
+                    val isAdmin = role == "admin"
+
+                    navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = isInstructorOrAdmin
+                    navView.menu.findItem(R.id.profileItem)?.isVisible = isInstructorOrAdmin
+                    navView.menu.findItem(R.id.adminPanelItem)?.isVisible = isAdmin
+                    
+                    bottomNavView.menu.findItem(R.id.profileItem)?.isVisible = isInstructorOrAdmin
+                }
+                .addOnFailureListener {
+                    userNameTextView.text = "Student"
+                    // Menu items stay hidden — fail closed, not open
+                }
         } else {
             userEmailTextView.text = "student@Upwork.com"
             userNameTextView.text = "student user"
         }
-        // Professional Handle Sign Out
+
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.signOutItem -> {
@@ -74,8 +98,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    // Handle other navigation items
-                    val handled = androidx.navigation.ui.NavigationUI.onNavDestinationSelected(item, navController)
+                    val handled = NavigationUI.onNavDestinationSelected(item, navController)
                     if (handled) {
                         drawerLayout.closeDrawers()
                     }
@@ -85,14 +108,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-
     private fun signOut() {
         FirebaseAuth.getInstance().signOut()
-
-        // Redirect to Login
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }

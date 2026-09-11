@@ -2,8 +2,9 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/videoCard"
     android:layout_width="match_parent"
-    android:layout_height="380dp"
+    android:layout_height="300dp"
     android:layout_margin="16dp"
     android:clickable="true"
     android:focusable="true"
@@ -17,7 +18,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/instructorImageView"
+            android:id="@+id/sessionImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -35,13 +36,12 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/videoTitle"
+            android:id="@+id/sessionTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:layout_marginHorizontal="20dp"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:text=""
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"

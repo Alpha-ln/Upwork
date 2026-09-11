@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="0dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/sessionImageView"
@@ -42,6 +42,18 @@
             app:layout_constraintStart_toEndOf="@+id/sessionImageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
+
+        <ImageButton
+            android:id="@+id/deleteVideoBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            android:focusable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@android:drawable/ic_delete" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
