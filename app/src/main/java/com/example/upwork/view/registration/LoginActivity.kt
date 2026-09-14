@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 binding.googleBtn.isEnabled = true
-                Toast.makeText(this, "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.google_sign_in_failed_prefix) + e.message, Toast.LENGTH_SHORT).show()
             }
         } else {
             // User cancelled the Google account picker
@@ -76,12 +76,12 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordInput.editText?.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                binding.emailInput.error = "Enter a valid email"
+                binding.emailInput.error = getString(R.string.enter_valid_email)
                 return@setOnClickListener
             }
 
@@ -97,13 +97,13 @@ class LoginActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     binding.logInBtn.isEnabled = true
-                    Toast.makeText(this, e.message ?: "Login failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, e.message ?: getString(R.string.login_failed), Toast.LENGTH_LONG).show()
                 }
         }
 
         // Respond to text changes in real-time
         binding.emailInput.editText?.doOnTextChanged { text, _, _, _ ->
-            binding.emailInput.error = if (text.isNullOrEmpty()) "Email is required" else null
+            binding.emailInput.error = if (text.isNullOrEmpty()) getString(R.string.email_required) else null
         }
 
         binding.signUptxt.setOnClickListener {
@@ -113,11 +113,11 @@ class LoginActivity : AppCompatActivity() {
         binding.forgetPassTxt.setOnClickListener {
             val email = binding.emailInput.editText?.text?.toString()?.trim() ?: ""
             if (email.isEmpty()) {
-                binding.emailInput.error = "Enter your email first"
+                binding.emailInput.error = getString(R.string.enter_email_first)
                 return@setOnClickListener
             }
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                binding.emailInput.error = "Enter a valid email"
+                binding.emailInput.error = getString(R.string.enter_valid_email)
                 return@setOnClickListener
             }
 
@@ -125,11 +125,11 @@ class LoginActivity : AppCompatActivity() {
             auth.sendPasswordResetEmail(email)
                 .addOnSuccessListener {
                     binding.forgetPassTxt.isEnabled = true
-                    Toast.makeText(this, "Password reset email sent", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.reset_email_sent), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
                     binding.forgetPassTxt.isEnabled = true
-                    Toast.makeText(this, e.message ?: "Failed to send reset email", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, e.message ?: getString(R.string.failed_reset_email), Toast.LENGTH_LONG).show()
                 }
         }
 
@@ -154,7 +154,7 @@ class LoginActivity : AppCompatActivity() {
                 val user = result.user
                 if (user == null) {
                     binding.googleBtn.isEnabled = true
-                    Toast.makeText(this, "Something went wrong, try again", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
                     return@addOnSuccessListener
                 }
 
@@ -186,7 +186,7 @@ class LoginActivity : AppCompatActivity() {
                                 .addOnSuccessListener { goHome() }
                                 .addOnFailureListener { e ->
                                     binding.googleBtn.isEnabled = true
-                                    Toast.makeText(this, "Setup failed: ${e.message}", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this, getString(R.string.setup_failed_prefix) + e.message, Toast.LENGTH_LONG).show()
                                 }
                         } else {
                             goHome()
@@ -194,12 +194,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     .addOnFailureListener { e ->
                         binding.googleBtn.isEnabled = true
-                        Toast.makeText(this, "Failed to load profile: ${e.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.failed_load_profile_prefix) + e.message, Toast.LENGTH_LONG).show()
                     }
             }
             .addOnFailureListener { e ->
                 binding.googleBtn.isEnabled = true
-                Toast.makeText(this, e.message ?: "Google authentication failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, e.message ?: getString(R.string.google_auth_failed), Toast.LENGTH_SHORT).show()
             }
     }
 

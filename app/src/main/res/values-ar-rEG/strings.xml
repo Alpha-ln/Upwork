@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Upwork</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="name">الاسم</string>
+    <string name="conf_password">تأكيد كلمة المرور</string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="sign_up">إنشاء حساب</string>
+    <string name="have_account">ليس لديك حساب؟</string>
+    <string name="forget_pass">نسيت كلمة المرور؟</string>
+    <string name="back_to_login">العودة لتسجيل الدخول</string>
+    <string name="or_log_in_with">أو سجل دخولك بواسطة</string>
+    <string name="google_login">تسجيل الدخول بواسطة جوجل</string>
+    <string name="hello">مرحباً!</string>
+    <string name="welcome_to_upwork">مرحباً بك في Upwork</string>
+    <string name="generate_new_code">إنشاء كود جديد</string>
+    <string name="num_of_code">كم عدد الأكواد؟</string>
+    <string name="student_level">مستواك الدراسي</string>
+
+    <string name="profile">الملف الشخصي</string>
+    <string name="history">السجل</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="sign_out">تسجيل الخروج</string>
+    <string name="code_generation">انشاء كود</string>
+    <string name="verify">تحقق</string>
+    <string name="enter_code">أدخل الكود الخاص بك</string>
+    <string name="video_desc_placeholder">وصف الفيديو يظهر هنا...</string>
+    <string name="recent_videos">الفيديوهات الأخيرة</string>
+    <string name="search_hint">ابحث عن الفيديوهات...</string>
+    <string name="welcome_back">مرحباً بعودتك!</string>
+    <string name="video_id_hint">معرف الفيديو (ID)</string>
+    <string name="instructor_playlist_title">قائمة تشغيل المحاضر</string>
+    <string name="don_t_have_account">ليس لديك حساب؟</string>
+
+    <!-- Toast messages -->
+    <string name="select_video_first">اختر فيديو أولاً</string>
+    <string name="enter_num_codes">أدخل عدد الأكواد</string>
+    <string name="enter_valid_num">أدخل رقماً صالحاً</string>
+    <string name="generate_codes_first">أنشئ الأكواد أولاً</string>
+    <string name="video_deleted">تم حذف الفيديو بنجاح</string>
+    <string name="failed_delete_video">فشل حذف الفيديو</string>
+    <string name="provide_title_url">يرجى تقديم عنوان ورابط يوتيوب صالحين</string>
+    <string name="video_added">تم إضافة الفيديو بنجاح</string>
+    <string name="failed_add_video">فشل إضافة الفيديو</string>
+    <string name="enter_valid_code">أدخل كوداً صالحاً</string>
+    <string name="code_verified">تم التحقق من الكود بنجاح!</string>
+    <string name="error_prefix">"خطأ: "</string>
+    <string name="google_sign_in_failed_prefix">"فشل تسجيل الدخول بجوجل: "</string>
+    <string name="fill_all_fields">يرجى ملء جميع الحقول</string>
+    <string name="login_failed">فشل تسجيل الدخول</string>
+    <string name="reset_email_sent">تم إرسال بريد إعادة تعيين كلمة المرور</string>
+    <string name="failed_reset_email">فشل إرسال بريد إعادة التعيين</string>
+    <string name="something_went_wrong">حدث خطأ ما، حاول مرة أخرى</string>
+    <string name="setup_failed_prefix">"فشل الإعداد: "</string>
+    <string name="failed_load_profile_prefix">"فشل تحميل الملف الشخصي: "</string>
+    <string name="google_auth_failed">فشل مصادقة جوجل</string>
+    <string name="sign_up_successful">تم إنشاء الحساب بنجاح</string>
+    <string name="failed_save_profile_prefix">"فشل حفظ الملف الشخصي: "</string>
+    <string name="sign_up_failed">فشل إنشاء الحساب</string>
+
+    <!-- Additional UI Strings -->
+    <string name="codes_saved">تم حفظ الأكواد في قاعدة البيانات</string>
+    <string name="failed_save_codes">فشل حفظ الأكواد</string>
+    <string name="delete_video_title">حذف الفيديو</string>
+    <string name="delete_video_confirm">هل أنت متأكد من حذف هذه الجلسة؟</string>
+    <string name="delete">حذف</string>
+    <string name="cancel">إلغاء</string>
+    <string name="video_title_hint">عنوان الفيديو</string>
+    <string name="youtube_url_hint">رابط يوتيوب</string>
+    <string name="add_new_video_title">إضافة فيديو جديد</string>
+    <string name="add">إضافة</string>
+    <string name="enter_valid_email">أدخل بريداً إلكترونياً صالحاً</string>
+    <string name="email_required">البريد الإلكتروني مطلوب</string>
+    <string name="enter_email_first">أدخل بريدك الإلكتروني أولاً</string>
+    <string name="first_level">المستوى الأول</string>
+    <string name="second_level">المستوى الثاني</string>
+    <string name="third_level">المستوى الثالث</string>
+    <string name="passwords_not_match">كلمات المرور غير متطابقة</string>
+    <string name="password_min_length">يجب أن تتكون كلمة المرور من 6 أحرف على الأقل</string>
+    <string name="generate">إنشاء</string>
+    <string name="print">طباعة</string>
+    <string name="welcome_user">أهلاً بك، %1$s!</string>
+    <string name="student">طالب</string>
+    <string name="student_user">مستخدم طالب</string>
+    <string name="default_student_email">student@Upwork.com</string>
+</resources>

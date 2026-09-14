@@ -57,16 +57,16 @@ class CodeGeneratingFragment : Fragment() {
             val videoId = selectedVideoId
 
             if (videoId.isNullOrEmpty()) {
-                Toast.makeText(context, "Select a video first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.select_video_first), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (countStr.isEmpty()) {
-                Toast.makeText(context, "Enter number of codes", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.enter_num_codes), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val count = countStr.toIntOrNull() ?: 0
             if (count <= 0) {
-                Toast.makeText(context, "Enter a valid number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.enter_valid_num), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -77,7 +77,7 @@ class CodeGeneratingFragment : Fragment() {
             if (generatedCodesList.isNotEmpty()) {
                 doPrint()
             } else {
-                Toast.makeText(context, "Generate codes first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.generate_codes_first), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -121,7 +121,7 @@ class CodeGeneratingFragment : Fragment() {
 
         lifecycleScope.launch {
             val success = repository.saveCodes(codeMap)
-            val msg = if (success) "Codes saved to database" else "Failed to save codes"
+            val msg = if (success) getString(R.string.codes_saved) else getString(R.string.failed_save_codes)
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }

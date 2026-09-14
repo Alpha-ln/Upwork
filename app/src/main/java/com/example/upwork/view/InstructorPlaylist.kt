@@ -70,12 +70,12 @@ class InstructorPlaylist : Fragment() {
 
     private fun showDeleteVideoDialog(video: Video) {
             AlertDialog.Builder(requireContext())
-                .setTitle("Delete Video")
-                .setMessage("Are you sure to delete this session?")
-                .setPositiveButton("Delete") { _, _ ->
+                .setTitle(getString(R.string.delete_video_title))
+                .setMessage(getString(R.string.delete_video_confirm))
+                .setPositiveButton(getString(R.string.delete)) { _, _ ->
                     deleteVideo(video)
                 }
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show()
         }
 
@@ -84,10 +84,10 @@ class InstructorPlaylist : Fragment() {
             playlistProgressBar.visibility = View.VISIBLE
             val success = repository.deleteVideo(video)
             if (success) {
-                Toast.makeText(requireContext(), "Video deleted successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.video_deleted), Toast.LENGTH_SHORT).show()
                 loadVideos()
             } else {
-                Toast.makeText(requireContext(), "Failed to delete video", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.failed_delete_video), Toast.LENGTH_SHORT).show()
             }
             playlistProgressBar.visibility = View.GONE
         }
@@ -109,19 +109,19 @@ class InstructorPlaylist : Fragment() {
         }
 
         val titleInput = EditText(requireContext()).apply {
-            hint = "Video Title"
+            hint = getString(R.string.video_title_hint)
         }
         val urlInput = EditText(requireContext()).apply {
-            hint = "YouTube URL"
+            hint = getString(R.string.youtube_url_hint)
         }
 
         layout.addView(titleInput)
         layout.addView(urlInput)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Add New Video")
+            .setTitle(getString(R.string.add_new_video_title))
             .setView(layout)
-            .setPositiveButton("Add") { _, _ ->
+            .setPositiveButton(getString(R.string.add)) { _, _ ->
                 val title = titleInput.text.toString().trim()
                 val url = urlInput.text.toString().trim()
                 val videoId = extractYoutubeVideoId(url)
@@ -129,10 +129,10 @@ class InstructorPlaylist : Fragment() {
                 if (title.isNotEmpty() && videoId != null) {
                     saveVideo(title, videoId)
                 } else {
-                    Toast.makeText(requireContext(), "Please provide a valid title and YouTube URL", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.provide_title_url), Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
@@ -156,10 +156,10 @@ class InstructorPlaylist : Fragment() {
             playlistProgressBar.visibility = View.VISIBLE
             val success = repository.addNewVideo(video)
             if (success) {
-                Toast.makeText(requireContext(), "Video added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.video_added), Toast.LENGTH_SHORT).show()
                 loadVideos()
             } else {
-                Toast.makeText(requireContext(), "Failed to add video", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.failed_add_video), Toast.LENGTH_SHORT).show()
             }
             playlistProgressBar.visibility = View.GONE
         }

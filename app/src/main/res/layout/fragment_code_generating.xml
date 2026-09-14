@@ -68,42 +68,32 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Generate"
+            android:text="@string/generate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/numOfCodeInputLayout" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/displayCodeRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="190dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/printBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/generateBtn">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/displayCodeRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/generateBtn" />
 
         <Button
             android:id="@+id/printBtn"
+            style="@style/btnStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Print"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="200dp"
             android:backgroundTint="@color/brand_red"
-            style="@style/btnStyle"
+            android:text="@string/print"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.126" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

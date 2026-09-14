@@ -48,7 +48,6 @@ class HomeActivity : AppCompatActivity() {
 
         // HIDE special menus by default before checking role
         navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = false
-        navView.menu.findItem(R.id.adminPanelItem)?.isVisible = false
         navView.menu.findItem(R.id.profileItem)?.isVisible = false
         bottomNavView.menu.findItem(R.id.profileItem)?.isVisible = false
 
@@ -70,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
                     val name = doc.getString("name")
                     val role = doc.getString("role") ?: "student"
 
-                    userNameTextView.text = if (!name.isNullOrEmpty()) name else "Student"
+                    userNameTextView.text = if (!name.isNullOrEmpty()) name else getString(R.string.student)
 
                     // Reveal role-gated menu items only after confirming role
                     val isInstructorOrAdmin = role == "instructor" || role == "admin"
@@ -78,17 +77,16 @@ class HomeActivity : AppCompatActivity() {
 
                     navView.menu.findItem(R.id.codeGeneratingItem)?.isVisible = isInstructorOrAdmin
                     navView.menu.findItem(R.id.profileItem)?.isVisible = isInstructorOrAdmin
-                    navView.menu.findItem(R.id.adminPanelItem)?.isVisible = isAdmin
                     
                     bottomNavView.menu.findItem(R.id.profileItem)?.isVisible = isInstructorOrAdmin
                 }
                 .addOnFailureListener {
-                    userNameTextView.text = "Student"
+                    userNameTextView.text = getString(R.string.student)
                     // Menu items stay hidden — fail closed, not open
                 }
         } else {
-            userEmailTextView.text = "student@Upwork.com"
-            userNameTextView.text = "student user"
+            userEmailTextView.text = getString(R.string.default_student_email)
+            userNameTextView.text = getString(R.string.student_user)
         }
 
         navView.setNavigationItemSelectedListener { item ->

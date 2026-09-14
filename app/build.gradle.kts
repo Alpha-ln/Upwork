@@ -49,6 +49,8 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0")
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:13.0.0")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.32")
 
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.recyclerview)

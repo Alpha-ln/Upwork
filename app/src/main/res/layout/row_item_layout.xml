@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Integration"
+            android:text="@string/video_desc_placeholder"
             android:textAllCaps="true"
             android:textColor="@color/brand_red"
             android:textSize="12sp"

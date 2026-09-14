@@ -21,10 +21,11 @@
     <!-- Firebase/Google configuration -->
     <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_FROM_FIREBASE</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Profile</string>
     <string name="history">History</string>
+    <string name="home">Home</string>
     <string name="sign_out">sign out</string>
+    <string name="code_generation">Code Generation</string>
     <string name="verify">Verify</string>
     <string name="enter_code">Enter your code</string>
     <string name="video_desc_placeholder">Video description goes here...</string>
@@ -32,6 +33,57 @@
     <string name="search_hint">Search videos...</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="video_id_hint">Video ID</string>
-    <string name="instructor_playlist_title">Instructor Playlist</string>
-    <string name="don_t_have_account">Don\'t have account?</string>
+    <string name="instructor_playlist_title">Instructor Playlist</string>    <string name="don_t_have_account">Don\'t have account?</string>
+
+    <!-- Toast messages -->
+    <string name="select_video_first">Select a video first</string>
+    <string name="enter_num_codes">Enter number of codes</string>
+    <string name="enter_valid_num">Enter a valid number</string>
+    <string name="generate_codes_first">Generate codes first</string>
+    <string name="video_deleted">Video deleted successfully</string>
+    <string name="failed_delete_video">Failed to delete video</string>
+    <string name="provide_title_url">Please provide a valid title and YouTube URL</string>
+    <string name="video_added">Video added successfully</string>
+    <string name="failed_add_video">Failed to add video</string>
+    <string name="enter_valid_code">Enter a valid code</string>
+    <string name="code_verified">Code verified successfully!</string>
+    <string name="error_prefix">Error: </string>
+    <string name="google_sign_in_failed_prefix">Google sign in failed: </string>
+    <string name="fill_all_fields">Please fill all fields</string>
+    <string name="login_failed">Login failed</string>
+    <string name="reset_email_sent">Password reset email sent</string>
+    <string name="failed_reset_email">Failed to send reset email</string>
+    <string name="something_went_wrong">Something went wrong, try again</string>
+    <string name="setup_failed_prefix">Setup failed: </string>
+    <string name="failed_load_profile_prefix">Failed to load profile: </string>
+    <string name="google_auth_failed">Google authentication failed</string>
+    <string name="sign_up_successful">Sign up successful</string>
+    <string name="failed_save_profile_prefix">Failed to save profile: </string>
+    <string name="sign_up_failed">Sign up failed</string>
+
+    <!-- Additional UI Strings -->
+    <string name="codes_saved">Codes saved to database</string>
+    <string name="failed_save_codes">Failed to save codes</string>
+    <string name="delete_video_title">Delete Video</string>
+    <string name="delete_video_confirm">Are you sure to delete this session?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="video_title_hint">Video Title</string>
+    <string name="youtube_url_hint">YouTube URL</string>
+    <string name="add_new_video_title">Add New Video</string>
+    <string name="add">Add</string>
+    <string name="enter_valid_email">Enter a valid email</string>
+    <string name="email_required">Email is required</string>
+    <string name="enter_email_first">Enter your email first</string>
+    <string name="first_level">First level</string>
+    <string name="second_level">Second level</string>
+    <string name="third_level">Third level</string>
+    <string name="passwords_not_match">Passwords not match</string>
+    <string name="password_min_length">Password must be at least 6 characters</string>
+    <string name="generate">Generate</string>
+    <string name="print">Print</string>
+    <string name="welcome_user">Welcome, %1$s!</string>
+    <string name="student">Student</string>
+    <string name="student_user">Student User</string>
+    <string name="default_student_email">student@Upwork.com</string>
 </resources>

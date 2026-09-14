@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import com.example.upwork.R
 import com.example.upwork.databinding.SignUpLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -26,7 +27,11 @@ class SignUpActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        val levels = arrayOf("First level", "Second level", "Third level")
+        val levels = arrayOf(
+            getString(R.string.first_level),
+            getString(R.string.second_level),
+            getString(R.string.third_level)
+        )
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, levels)
         (binding.studentLevel.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
@@ -38,15 +43,15 @@ class SignUpActivity : AppCompatActivity() {
             val studentLevel = binding.studentLevel.editText?.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || name.isEmpty() || studentLevel.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (password != confirmPassword) {
-                binding.confirmPassInput.error = "Passwords not match"
+                binding.confirmPassInput.error = getString(R.string.passwords_not_match)
                 return@setOnClickListener
             }
             if (password.length < 6) {
-                binding.passwordInput.error = "Password must be at least 6 characters"
+                binding.passwordInput.error = getString(R.string.password_min_length)
                 return@setOnClickListener
             }
 
@@ -57,7 +62,7 @@ class SignUpActivity : AppCompatActivity() {
                     val uid = result.user?.uid
                     if (uid == null) {
                         binding.signUpBtn.isEnabled = true
-                        Toast.makeText(this, "Something went wrong, try again", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
                         return@addOnSuccessListener
                     }
 
@@ -79,7 +84,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     batch.commit()
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Sign up successful", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, getString(R.string.sign_up_successful), Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, LoginActivity::class.java))
                             finish()
                         }
@@ -87,22 +92,22 @@ class SignUpActivity : AppCompatActivity() {
                             // Auth account exists but Firestore write failed — clean up so they can retry cleanly
                             result.user?.delete()
                             binding.signUpBtn.isEnabled = true
-                            Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, getString(R.string.failed_save_profile_prefix) + e.message, Toast.LENGTH_LONG).show()
                         }
                 }
                 .addOnFailureListener { e ->
                     binding.signUpBtn.isEnabled = true
-                    Toast.makeText(this, e.message ?: "Sign up failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, e.message ?: getString(R.string.sign_up_failed), Toast.LENGTH_LONG).show()
                 }
         }
 
         binding.emailInput.editText?.doOnTextChanged { text, _, _, _ ->
-            binding.emailInput.error = if (text.isNullOrEmpty()) "Email is required" else null
+            binding.emailInput.error = if (text.isNullOrEmpty()) getString(R.string.email_required) else null
         }
 
         binding.backToLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
-            finish() // see note below
+            finish()
         }
     }
 }

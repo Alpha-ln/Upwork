@@ -28,7 +28,7 @@
             app:itemIconSize="24dp"
             app:itemIconTint="@color/brand_blue"
             app:itemRippleColor="@color/brand_red"
-            app:labelVisibilityMode="unlabeled"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_bar_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

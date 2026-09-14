@@ -45,7 +45,7 @@ class HostFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     val name = document.getString("name")
                     if (!name.isNullOrEmpty()) {
-                        welcomeText.text = "Welcome, $name!"
+                        welcomeText.text = getString(R.string.welcome_user, name)
                     }
                 }
         }
